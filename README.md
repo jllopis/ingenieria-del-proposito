@@ -29,6 +29,8 @@ Este repositorio es un **marketplace** de Claude Code que distribuye el plugin *
 | `/telos:check` | Validar contra propósito + tests + commit + PR |
 | `/telos:sync` | Sincronizar cambios remotos |
 
+> **Nota:** El autocompletado del CLI muestra la forma corta (`/brief`, `/review`, etc.). Ambas formas son válidas.
+
 ### Instalación
 
 ```bash

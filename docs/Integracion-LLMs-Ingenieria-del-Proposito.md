@@ -89,6 +89,8 @@ Estas skills se cargan automáticamente cuando un comando las referencia. No apa
 | `/telos:check` | Al validar + commit + PR |
 | `/telos:sync` | Al sincronizar cambios remotos |
 
+> **Nota:** El autocompletado del CLI muestra la forma corta (`/brief`, `/review`, etc.). Ambas formas son válidas.
+
 ### Plantillas
 
 Las plantillas existen como activos copiables en `purpose-core/assets/`:

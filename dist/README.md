@@ -21,7 +21,7 @@ No hay ficheros duplicados: los symlinks apuntan a `plugins/telos/skills/`.
 
 ### Claude Code (canónico)
 - Plugin con `plugin.json` + `skills/*/SKILL.md`
-- Comandos: `/telos:brief`, `/telos:review`, etc.
+- Comandos: `/telos:brief`, `/telos:review`, etc. (el autocompletado del CLI muestra la forma corta `/brief`, `/review`)
 - Skills de conocimiento cargadas automáticamente
 
 ### Agent Skills (Codex, Cursor, etc.)
