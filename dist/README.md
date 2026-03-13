@@ -1,19 +1,21 @@
 # Distribuciones multiplataforma
 
-Este directorio contiene adaptadores generados a partir del contenido canónico en `plugins/telos/`.
+El contenido canónico vive en `plugins/telos/`. La distribución para otras plataformas usa dos mecanismos:
 
-## Plataformas
+## Agent Skills (estándar abierto)
 
-| Directorio | Plataforma | Formato |
-|------------|------------|---------|
-| `codex/` | OpenAI Codex | System prompts como archivos `.md` en directorio de instrucciones |
-| `opencode/` | OpenCode | Slash commands como archivos `.md` en `command/` |
+El directorio `.agents/skills/` en la raíz del repo contiene symlinks a las skills del plugin. Cualquier herramienta compatible con el estándar Agent Skills (agentskills.io) puede usarlas directamente:
 
-## Generación
+- **OpenAI Codex**: `$skill-installer` con URL del repo, o clonar y las detecta automáticamente
+- **Cursor, VS Code Copilot, Gemini CLI, Goose, Roo Code**, etc.: clonar el repo o copiar `.agents/skills/`
 
-Los adaptadores se generan manualmente a partir de los SKILL.md del plugin. El contenido canónico siempre es `plugins/telos/skills/*/SKILL.md`.
+No hay ficheros duplicados: los symlinks apuntan a `plugins/telos/skills/`.
 
-**No editar directamente los ficheros de `dist/`.** Si hay que hacer cambios, hazlos en `plugins/telos/` y regenera.
+## Adaptadores específicos
+
+| Directorio | Plataforma | Estado |
+|------------|------------|--------|
+| `opencode/` | OpenCode | Pendiente de generar |
 
 ## Diferencias entre plataformas
 
@@ -22,12 +24,12 @@ Los adaptadores se generan manualmente a partir de los SKILL.md del plugin. El c
 - Comandos: `/telos:brief`, `/telos:review`, etc.
 - Skills de conocimiento cargadas automáticamente
 
-### OpenAI Codex
-- System prompts como archivos Markdown
-- Sin namespace de plugin; los prompts se inyectan directamente
-- Las skills de conocimiento se incluyen como contexto en cada prompt
+### Agent Skills (Codex, Cursor, etc.)
+- Skills en `.agents/skills/` con el mismo formato SKILL.md
+- Invocación explícita: `$skill-name` (Codex) o equivalente
+- Invocación implícita: automática por descripción del skill
 
 ### OpenCode
 - Slash commands en `command/` como archivos `.md` con frontmatter `description:`
-- Sin namespace; comandos como `/dev-plan`, `/dev-exec`, etc.
+- Sin namespace; comandos como `/telos-plan`, `/telos-exec`, etc.
 - Las skills se referencian como `skills/<nombre>/SKILL.md`

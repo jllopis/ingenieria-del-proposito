@@ -121,23 +121,14 @@ No es obligatorio usar todos los comandos. En cambios pequeños basta con `/telo
 
 ## Distribución multiplataforma
 
-El repositorio es un **marketplace** de Claude Code. El contenido canónico del plugin vive en `plugins/telos/`. Para otras plataformas se generan adaptadores en `dist/`.
+El repositorio es un **marketplace** de Claude Code y un repositorio de **Agent Skills** (estándar abierto en agentskills.io). El contenido canónico vive en `plugins/telos/`; el directorio `.agents/skills/` contiene symlinks para compatibilidad con el estándar.
 
-| Plataforma | Directorio | Formato |
-|------------|------------|---------|
-| Claude Code | `plugins/telos/` | Plugin nativo con `plugin.json` + `skills/` |
-| OpenAI Codex | `dist/codex/` | System prompts combinados como `.md` |
-| OpenCode | `dist/opencode/` | Skills + slash commands en estructura OpenCode |
-
-### Instalación en Claude Code
-
-```bash
-# Añadir el marketplace
-/plugin marketplace add owner/ingenieria-del-proposito
-
-# Instalar el plugin
-/plugin install telos
-```
+| Plataforma | Mecanismo | Instalación |
+|------------|-----------|-------------|
+| Claude Code | Marketplace plugin | `/plugin marketplace add jllopis/ingenieria-del-proposito` → `/plugin install telos` |
+| OpenAI Codex | Agent Skills | `$skill-installer` con URL del repo |
+| Cursor, VS Code Copilot, Gemini CLI, etc. | Agent Skills | Clonar el repo o copiar `.agents/skills/` |
+| OpenCode | Adaptador en `dist/opencode/` | Copiar skills y commands al directorio de configuración |
 
 ## Beneficios de este modelo
 

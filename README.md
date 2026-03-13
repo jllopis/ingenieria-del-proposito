@@ -69,10 +69,11 @@ Este enfoque nace del artículo [La Tiranía del Contexto](https://disidencia.in
 
 ## Otras plataformas
 
-Además de Claude Code, se proporcionan adaptadores para:
+El repositorio incluye `.agents/skills/` compatible con el estándar abierto [Agent Skills](https://agentskills.io). Funciona con:
 
-- **OpenAI Codex** — `dist/codex/`
-- **OpenCode** — `dist/opencode/`
+- **OpenAI Codex** — instalar vía `$skill-installer` con URL del repo
+- **Cursor, VS Code Copilot, Gemini CLI**, y cualquier herramienta compatible — clonar el repo
+- **OpenCode** — adaptador en `dist/opencode/`
 
 ## Autor
 
