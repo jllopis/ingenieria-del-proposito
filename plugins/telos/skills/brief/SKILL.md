@@ -101,6 +101,12 @@ Salida esperada:
 - ¿Hay requisito de persistencia para notificaciones no entregadas?
 ```
 
+## Persistencia
+
+Una vez validada la ficha, **sugiere al usuario guardarla en `docs/REQUIREMENTS.md`** dentro de la sección de fichas de propósito. La ficha actúa como user story + criterios de aceptación, y debe sobrevivir a la conversación para que `/telos:exec` y `/telos:check` puedan consultarla.
+
+Si el usuario prefiere no persistirla (cambio pequeño, exploración), respeta su decisión.
+
 ## Siguiente paso
 
-Una vez validada la ficha, el usuario puede trabajar con ella como base para implementación. Cuando haya una propuesta o código, usar `/telos:review` para evaluarla contra los horizontes.
+Una vez guardada la ficha, el usuario puede trabajar con ella como base para implementación. Cuando haya una propuesta o código, usar `/telos:review` para evaluarla contra los horizontes.
