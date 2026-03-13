@@ -1,6 +1,9 @@
 {
   "name": "ingenieria-del-proposito",
   "description": "Marketplace de Ingeniería del Propósito: metodología para trabajar con LLMs desde propósito explícito.",
+  "owner": {
+    "name": "Joan Llopis"
+  },
   "plugins": [
     {
       "name": "telos",
