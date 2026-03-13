@@ -1,0 +1,11 @@
+{
+  "name": "ingenieria-del-proposito",
+  "description": "Marketplace de Ingeniería del Propósito: metodología para trabajar con LLMs desde propósito explícito.",
+  "plugins": [
+    {
+      "name": "telos",
+      "description": "Ingeniería del Propósito: brief, review, retro + ciclo de vida de proyecto + flujo corporativo de Git.",
+      "source": "./plugins/telos"
+    }
+  ]
+}

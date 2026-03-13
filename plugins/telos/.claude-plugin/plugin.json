@@ -1,0 +1,9 @@
+{
+  "name": "telos",
+  "description": "Ingeniería del Propósito: trabaja con LLMs desde propósito explícito. Incluye metodología de propósito (brief, review, retro), ciclo de vida de proyecto (init, plan, exec, check, sync) y flujo corporativo de Git.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Joan Llopis"
+  },
+  "license": "MIT"
+}
