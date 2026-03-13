@@ -33,11 +33,29 @@ Este repositorio es un **marketplace** de Claude Code que distribuye el plugin *
 
 ```bash
 # Añadir el marketplace
-/plugin marketplace add owner/ingenieria-del-proposito
+/plugin marketplace add jllopis/ingenieria-del-proposito
 
 # Instalar el plugin
 /plugin install telos
+
+# Recargar en la sesión actual
+/reload-plugins
 ```
+
+### Actualización
+
+```bash
+# Refrescar el marketplace
+/plugin marketplace update ingenieria-del-proposito
+
+# Actualizar el plugin
+/plugin update telos@ingenieria-del-proposito
+
+# Recargar en la sesión actual
+/reload-plugins
+```
+
+Para actualizaciones automáticas: `/plugin` → pestaña **Marketplaces** → seleccionar `ingenieria-del-proposito` → **Enable auto-update**.
 
 ### Flujo típico
 
