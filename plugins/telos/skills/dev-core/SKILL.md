@@ -3,7 +3,7 @@ name: telos-dev-core
 description: "Ciclo de vida de proyecto del plugin telos en 3 fases (plan → exec → check), adaptable a tres modos: dev-team (equipo + PRs), dev-solo (un dev + agente IA, sin PRs), documental (entregables no-código). Integra telos-purpose-core en las tres fases y delega Git a telos-git-core cuando aplica. Orquestador de `/telos:plan`, `/telos:exec`, `/telos:check`."
 user-invocable: false
 metadata:
-  version: "2.2.0"
+  version: "2.3.0"
 ---
 
 # Dev Flow
@@ -242,9 +242,10 @@ Validar contra propósito + estándares (técnicos o documentales), cerrar (comm
 4. Code review / peer review (modo `dev-team`) o lectura por aprobadores (modo `documental`).
 5. Aplica fixes.
 6. **Cierre adaptado al modo:**
-   - `dev-team`: commit semántico + PR (delega a `telos-git-core`). El cuerpo del PR incluye ficha + revisión (plantilla `pr-template.md`).
-   - `dev-solo`: commit semántico con la ficha + revisión **dentro del mensaje** (plantilla `commit-message-template.md`). Sin PR.
-   - `documental`: publica al almacén canónico, registra versión, notifica a stakeholders.
+   - `dev-team`: commit semántico + **push** + PR (delega a `telos-git-core`). El cuerpo del PR incluye ficha + revisión (plantilla `pr-template.md`).
+   - `dev-solo`: commit semántico con la ficha + revisión **dentro del mensaje** (plantilla `commit-message-template.md`) + **push**. Sin PR.
+   - `documental`: publica al almacén canónico, registra versión, notifica a stakeholders. Si el almacén es git, commit + push.
+   - En modos `dev-*`, **el push es parte del cierre**: sin él la traza queda atrapada en local. Override con `**Push automático:** no` en `REQUIREMENTS.md`.
 7. **Lección de propósito** con clasificación obligatoria (local / capacidad / paraguas) y producción de diff sobre `REQUIREMENTS.md` si aplica.
 8. **Retro de fase** si la tarea cerrada es la última `todo` de una fase del ROADMAP.
 

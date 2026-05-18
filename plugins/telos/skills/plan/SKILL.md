@@ -69,6 +69,7 @@ Propone split si el proyecto va a tener muchas capacidades.
 
 **Modo del proyecto:** dev-team | dev-solo | documental
 **Almacén canónico:** [git remote URL | Drive folder | Confluence space | etc.]
+**Push automático:** yes | no  *(default: yes en modos dev-* con remote configurado; ver `telos-check` paso 6)*
 **Normativa aplicable:** [si procede: ENS, ISO 27001, GDPR, ...]
 
 ## Goal

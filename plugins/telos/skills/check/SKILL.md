@@ -1,6 +1,6 @@
 ---
 name: telos-check
-description: "Activar SOLO si el usuario escribe `/telos:check` o pide explícitamente cerrar un cambio bajo Ingeniería del Propósito: revisa contra ficha de propósito horizonte por horizonte, ejecuta validación (tests/lint/build en modos dev-*, plantilla+referencias+aprobaciones en modo documental), cierra (commit+PR en dev-team, commit con ficha embebida en dev-solo, publicación+notificación en documental), y captura lección clasificándola como local/capacidad/paraguas con diff propuesto a REQUIREMENTS.md. Detecta cierre de fase del ROADMAP. NO activar para validaciones puntuales, lint aislado, ni revisiones de PR sin ficha de propósito previa."
+description: "Activar SOLO si el usuario escribe `/telos:check` o pide explícitamente cerrar un cambio bajo Ingeniería del Propósito: revisa contra ficha de propósito horizonte por horizonte, ejecuta validación (tests/lint/build en modos dev-*, plantilla+referencias+aprobaciones en modo documental), cierra (commit+push+PR en dev-team, commit+push con ficha embebida en dev-solo, publicación+notificación en documental), y captura lección clasificándola como local/capacidad/paraguas con diff propuesto a REQUIREMENTS.md. Detecta cierre de fase del ROADMAP. Push es parte del cierre en modos dev-* con remote; override con `Push automático: no` en REQUIREMENTS.md. NO activar para validaciones puntuales, lint aislado, ni revisiones de PR sin ficha de propósito previa."
 user-invocable: true
 ---
 
@@ -71,10 +71,11 @@ Aplica correcciones necesarias. Si los cambios son sustantivos, vuelve al paso 2
 #### Modo `dev-team`
 
 1. Commit(s) semánticos con ID de Jira (delega a `telos-git-core`).
-2. PR al branch correcto:
+2. **Push** de la rama a `origin` (con `-u` si es el primer push). Si el push falla, detén, informa y pide decisión (igual que un test roto). Si la rama no tiene remote configurado o el usuario declaró `**Push automático:** no` en `REQUIREMENTS.md`, omite el push y avisa.
+3. PR al branch correcto:
    - feature/bugfix → `develop`
    - release/hotfix → `main`/`master`
-3. **Cuerpo del PR usa la plantilla `telos-purpose-core/assets/pr-template.md`**:
+4. **Cuerpo del PR usa la plantilla `telos-purpose-core/assets/pr-template.md`**:
 
    ```md
    ## Ficha de propósito
@@ -123,7 +124,7 @@ Aplica correcciones necesarias. Si los cambios son sustantivos, vuelve al paso 2
 1. Publica el documento al almacén canónico (Drive, Confluence, local + git tag, etc.).
 2. Registra la versión (Drive history, naming convention, git tag, según almacén).
 3. Notifica a stakeholders según workflow declarado: aprobadores, equipo afectado, compliance.
-4. Si el almacén es git, commit con la plantilla de `dev-solo` (ficha + revisión en mensaje).
+4. Si el almacén es git, commit **y push** con la plantilla de `dev-solo` (ficha + revisión en mensaje).
 5. Actualiza estado en `TASKS.md` a `published`.
 
 ### 7. Lección de propósito con clasificación obligatoria
@@ -203,6 +204,7 @@ Pregunta por modo del proyecto (si no está en REQUIREMENTS.md), tipo de trabajo
 - No cierres con horizontes en violación. Detén el flujo y pide decisión.
 - En `dev-team`, el PR debe llevar la plantilla. Sin ella, el cambio es invisible para reviewers humanos.
 - En `dev-solo`, el commit message debe llevar la ficha embebida. Sin ella, no hay traza de propósito.
+- En modos `dev-*` con remote configurado, **push es parte del cierre**, no un paso opcional posterior. La traza compartida es el entregable. Excepción: si `REQUIREMENTS.md` declara `**Push automático:** no`, el agente omite el push y avisa al usuario para que lo lance manualmente.
 - En `documental`, no hay publicación sin aprobaciones presentes.
 - La clasificación de lección (paso 7) es obligatoria, no opcional. "Sin lección" es una opción válida.
 - En cierre de fase, retro de fase tiene precedencia sobre retro normal.
