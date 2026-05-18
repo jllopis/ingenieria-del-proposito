@@ -144,6 +144,7 @@ Definir el modo del proyecto, formular el propósito-paraguas y crear diseño, r
 
 **Modo del proyecto:** dev-team | dev-solo | documental
 **Almacén canónico:** [git remote URL | Drive folder | Confluence space]
+**Push automático:** yes | no  *(default: yes en modos dev-* con remote configurado)*
 **Normativa aplicable:** [si procede]
 
 ## Goal
