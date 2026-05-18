@@ -4,7 +4,7 @@ El contenido canónico vive en `plugins/telos/`. La distribución para otras pla
 
 ## Agent Skills (estándar abierto)
 
-El directorio `.agents/skills/` en la raíz del repo contiene symlinks a las skills del plugin. Cualquier herramienta compatible con el estándar Agent Skills (agentskills.io) puede usarlas directamente:
+El directorio `.agents/skills/` en la raíz del repo contiene symlinks prefijados (`telos-brief`, `telos-plan`, …) a las skills del plugin. El prefijo evita colisión con skills built-in u otras herramientas en entornos sin namespace. Cualquier herramienta compatible con el estándar Agent Skills (agentskills.io) puede usarlas directamente:
 
 - **OpenAI Codex**: `$skill-installer` con URL del repo, o clonar y las detecta automáticamente
 - **Cursor, VS Code Copilot, Gemini CLI, Goose, Roo Code**, etc.: clonar el repo o copiar `.agents/skills/`
@@ -25,9 +25,9 @@ No hay ficheros duplicados: los symlinks apuntan a `plugins/telos/skills/`.
 - Skills de conocimiento cargadas automáticamente
 
 ### Agent Skills (Codex, Cursor, etc.)
-- Skills en `.agents/skills/` con el mismo formato SKILL.md
-- Invocación explícita: `$skill-name` (Codex) o equivalente
-- Invocación implícita: automática por descripción del skill
+- Skills en `.agents/skills/` con el mismo formato SKILL.md, todas con prefijo `telos-`
+- Invocación explícita: `$telos-<nombre>` (Codex) o equivalente
+- Invocación implícita: automática por descripción del skill (las descripciones están endurecidas con triggers `/telos:*` para minimizar activaciones cruzadas)
 
 ### OpenCode
 - Slash commands en `command/` como archivos `.md` con frontmatter `description:`

@@ -1,6 +1,6 @@
 ---
-name: review
-description: "Revisa una propuesta, diseño, diff o PR contra una ficha de propósito existente. Evalúa horizonte por horizonte."
+name: telos-review
+description: "Activar SOLO si el usuario escribe `/telos:review` o pide explícitamente revisar una propuesta/diff/PR contra una ficha de propósito de Ingeniería del Propósito, evaluando horizonte por horizonte (funcional, arquitectónico, restricción, autoría). NO activar para code review genérico, revisión de PR sin ficha, revisión de seguridad ni revisión de estilo — para eso existen skills built-in (`review`, `security-review`)."
 user-invocable: true
 ---
 
@@ -10,7 +10,7 @@ Revisa una propuesta, diseño, diff o PR contra una ficha de propósito existent
 
 ## Contexto
 
-Este comando forma parte del plugin `telos`. Se usa después de `/telos:brief`, cuando ya existe una ficha de propósito y hay una solución que evaluar. La base teórica y los criterios de rechazo están en la skill `purpose-core`.
+Este comando forma parte del plugin `telos`. Se usa después de `/telos:brief`, cuando ya existe una ficha de propósito y hay una solución que evaluar. La base teórica y los criterios de rechazo están en la skill `telos-purpose-core`.
 
 ## Comportamiento
 

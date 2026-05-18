@@ -1,6 +1,6 @@
 ---
-name: resume
-description: "Dev flow: retomar un proyecto existente — inspecciona ramas, cambios locales y estado del repo."
+name: telos-resume
+description: "Activar SOLO si el usuario escribe `/telos:resume` o pide explícitamente retomar un proyecto existente bajo el ciclo de vida de Ingeniería del Propósito (inspecciona ramas, cambios locales, estado del repo). NO activar para resumir conversaciones, commits, documentos, ni reanudar tareas genéricas."
 user-invocable: true
 ---
 
@@ -10,7 +10,7 @@ Carga el estado real del repo antes de planificar o ejecutar.
 
 ## Contexto
 
-Este comando lanza la fase **resume** del ciclo de vida de proyecto definido en `dev-core`. Para operaciones Git aplica las reglas de `git-core`.
+Este comando lanza la fase **resume** del ciclo de vida de proyecto definido en `telos-dev-core`. Para operaciones Git aplica las reglas de `telos-git-core`.
 
 ## Comportamiento
 

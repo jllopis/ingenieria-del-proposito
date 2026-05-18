@@ -1,6 +1,6 @@
 ---
-name: exec
-description: "Dev flow: ejecutar — implementa guiado por el propósito declarado, con auto-revisión contra horizontes."
+name: telos-exec
+description: "Activar SOLO si el usuario escribe `/telos:exec` o pide explícitamente ejecutar un plan bajo Ingeniería del Propósito (implementación guiada por la ficha de propósito, con auto-revisión contra los cuatro horizontes). NO activar para ejecutar comandos shell, scripts, queries SQL, ni para implementación que no sigue la metodología de propósito."
 user-invocable: true
 ---
 
@@ -10,7 +10,7 @@ Implementa el plan de forma incremental, trazable y alineada con el propósito d
 
 ## Contexto
 
-Este comando lanza la fase **exec** del ciclo de vida de proyecto definido en `dev-core`. Las decisiones de implementación se guían por los cuatro horizontes de la ficha de propósito. Para operaciones Git aplica las reglas de `git-core`.
+Este comando lanza la fase **exec** del ciclo de vida de proyecto definido en `telos-dev-core`. Las decisiones de implementación se guían por los cuatro horizontes de la ficha de propósito. Para operaciones Git aplica las reglas de `telos-git-core`.
 
 ## Comportamiento
 

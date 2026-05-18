@@ -1,6 +1,6 @@
 ---
-name: brief
-description: "Convierte una petición o tarea en una ficha de propósito breve y accionable con los cuatro horizontes (funcional, arquitectónico, restricción, autoría)."
+name: telos-brief
+description: "Activar SOLO si el usuario escribe `/telos:brief` o pide explícitamente una ficha de propósito de Ingeniería del Propósito con los cuatro horizontes (funcional, arquitectónico, restricción, autoría). NO activar para resúmenes genéricos, briefings de reunión, descripciones de tareas, ni cualquier petición que no busque aplicar la metodología."
 user-invocable: true
 ---
 
@@ -10,7 +10,7 @@ Convierte una petición o tarea en una ficha de propósito breve y accionable.
 
 ## Contexto
 
-Este comando forma parte del plugin `telos`. La ficha de propósito es el artefacto central de la Ingeniería del Propósito: define el para qué de un cambio antes de aportar contexto o pedir código. La base teórica y los principios están en la skill `purpose-core`.
+Este comando forma parte del plugin `telos`. La ficha de propósito es el artefacto central de la Ingeniería del Propósito: define el para qué de un cambio antes de aportar contexto o pedir código. La base teórica y los principios están en la skill `telos-purpose-core`.
 
 ## Comportamiento
 

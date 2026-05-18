@@ -1,6 +1,6 @@
 ---
-name: sync
-description: "Dev flow: sincronizar — trae cambios remotos e integra localmente con merge, rebase o ff-only."
+name: telos-sync
+description: "Activar SOLO si el usuario escribe `/telos:sync` o pide explícitamente sincronizar cambios remotos bajo el ciclo de vida de Ingeniería del Propósito (merge/rebase/ff-only sobre la rama actual). NO activar para sincronización de datos entre sistemas, sync de archivos, sync de calendarios, ni `git pull` puntual sin contexto de telos."
 user-invocable: true
 ---
 
@@ -10,7 +10,7 @@ Trae cambios remotos e integra localmente.
 
 ## Contexto
 
-Este comando lanza la fase **sync** del ciclo de vida de proyecto definido en `dev-core`. Para operaciones Git aplica las reglas de `git-core`.
+Este comando lanza la fase **sync** del ciclo de vida de proyecto definido en `telos-dev-core`. Para operaciones Git aplica las reglas de `telos-git-core`.
 
 ## Comportamiento
 

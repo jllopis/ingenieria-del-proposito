@@ -1,6 +1,6 @@
 ---
-name: init
-description: "Dev flow: iniciar un proyecto nuevo con base funcional mínima (stack, repo, bootstrap, smoke test)."
+name: telos-init
+description: "Activar SOLO si el usuario escribe `/telos:init` o pide explícitamente iniciar un proyecto nuevo bajo el ciclo de vida de Ingeniería del Propósito (telos-dev-core: stack, repo, bootstrap, smoke test). NO activar para inicializar CLAUDE.md (existe la skill built-in `init`), `git init` puntual, o cualquier inicialización que no sea un proyecto completo bajo telos."
 user-invocable: true
 ---
 
@@ -10,7 +10,7 @@ Inicia un proyecto nuevo con base funcional mínima.
 
 ## Contexto
 
-Este comando lanza la fase **init** del ciclo de vida de proyecto definido en `dev-core`. Para operaciones Git aplica las reglas de `git-core`.
+Este comando lanza la fase **init** del ciclo de vida de proyecto definido en `telos-dev-core`. Para operaciones Git aplica las reglas de `telos-git-core`.
 
 ## Comportamiento
 

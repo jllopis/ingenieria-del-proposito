@@ -1,6 +1,6 @@
 ---
-name: retro
-description: "Convierte el resultado de un cambio completado en aprendizaje reutilizable (lección de propósito)."
+name: telos-retro
+description: "Activar SOLO si el usuario escribe `/telos:retro` o pide explícitamente capturar una lección de propósito (Ingeniería del Propósito) tras cerrar un cambio, vinculada a una ficha previa. NO activar para retrospectivas de equipo genéricas, post-mortems de incidentes, ni retrospectivas de sprint."
 user-invocable: true
 ---
 
@@ -10,7 +10,7 @@ Convierte el resultado de un cambio completado en aprendizaje reutilizable para 
 
 ## Contexto
 
-Este comando forma parte del plugin `telos`. Se usa después de cerrar un cambio, cuando el equipo quiere capturar qué funcionó, qué falló y qué podría mejorar en la ficha de propósito para trabajos futuros. La base teórica está en la skill `purpose-core`.
+Este comando forma parte del plugin `telos`. Se usa después de cerrar un cambio, cuando el equipo quiere capturar qué funcionó, qué falló y qué podría mejorar en la ficha de propósito para trabajos futuros. La base teórica está en la skill `telos-purpose-core`.
 
 ## Comportamiento
 

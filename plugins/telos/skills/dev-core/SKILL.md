@@ -1,6 +1,6 @@
 ---
-name: dev-core
-description: "Ciclo de vida de proyecto en fases: init, resume, plan, exec, check, sync. Integra Ingeniería del Propósito en plan, exec y check, y delega Git a git-core."
+name: telos-dev-core
+description: "Ciclo de vida de proyecto del plugin telos en fases: init, resume, plan, exec, check, sync. Integra Ingeniería del Propósito (telos-purpose-core) en plan, exec y check, y delega Git a telos-git-core. Orquestador de los comandos `/telos:init`, `/telos:resume`, `/telos:plan`, `/telos:exec`, `/telos:check`, `/telos:sync`."
 user-invocable: false
 metadata:
   version: "1.0.0"
@@ -48,7 +48,7 @@ Inputs comunes:
 
 ## Global rules
 
-- Para operaciones Git, aplica **git-core**.
+- Para operaciones Git, aplica **telos-git-core**.
 - `check` es **fail-hard**: si tests/lint/build fallan, no hay commit ni PR.
 - No commits directos a `develop`/`main`/`master`.
 - `rebase` solo en ramas locales privadas.
@@ -56,7 +56,7 @@ Inputs comunes:
 
 ## Integración con Ingeniería del Propósito
 
-Este flujo incorpora la skill **purpose-core** en tres fases:
+Este flujo incorpora la skill **telos-purpose-core** en tres fases:
 
 - **plan**: antes de crear documentación de proyecto, se formula la ficha de propósito con los cuatro horizontes (funcional, arquitectónico, restricción, autoría).
 - **exec**: las decisiones de implementación se guían por la ficha de propósito. Ante alternativas, prevalece la que mejor cumple los horizontes.

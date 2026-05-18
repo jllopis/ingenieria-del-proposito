@@ -25,11 +25,13 @@ Plugin para asistentes de código que aplica **Ingeniería del Propósito**: tra
 
 ### Skills de conocimiento (no invocables directamente)
 
+Todas las skills están prefijadas con `telos-` para evitar colisión con skills built-in u otros plugins.
+
 | Skill | Descripción |
 |-------|-------------|
-| `purpose-core` | Principios, horizontes, anti-patrones y flujo de la Ingeniería del Propósito |
-| `dev-core` | Reglas del ciclo de vida por fases (init → sync) |
-| `git-core` | Flujo corporativo de Git: Git Flow, branch naming, PRs, SemVer |
+| `telos-purpose-core` | Principios, horizontes, anti-patrones y flujo de la Ingeniería del Propósito |
+| `telos-dev-core` | Reglas del ciclo de vida por fases (init → sync) |
+| `telos-git-core` | Flujo corporativo de Git: Git Flow, branch naming, PRs, SemVer |
 
 ## Los cuatro horizontes
 

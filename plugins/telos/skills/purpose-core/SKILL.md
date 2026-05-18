@@ -1,6 +1,6 @@
 ---
-name: purpose-core
-description: Conocimiento base de Ingeniería del Propósito. Define los siete principios, los cuatro horizontes (funcional, arquitectónico, restricción, autoría), el flujo operativo y los anti-patrones. Gobierna el criterio de los comandos brief, review y retro.
+name: telos-purpose-core
+description: Conocimiento base de Ingeniería del Propósito. Define los siete principios, los cuatro horizontes (funcional, arquitectónico, restricción, autoría), el flujo operativo y los anti-patrones. Gobierna el criterio de los comandos `/telos:brief`, `/telos:review` y `/telos:retro`.
 user-invocable: false
 ---
 

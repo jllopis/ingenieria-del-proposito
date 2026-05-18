@@ -1,6 +1,6 @@
 ---
-name: plan
-description: "Dev flow: planificar — define propósito, diseño, requisitos, tareas y roadmap antes de implementar."
+name: telos-plan
+description: "Activar SOLO si el usuario escribe `/telos:plan` o pide explícitamente planificar un cambio bajo Ingeniería del Propósito (define propósito + diseño + requisitos + tareas + roadmap antes de implementar). NO activar para planning de sprint, scheduling de tareas, planes de viaje/eventos ni planes genéricos sin metodología de propósito."
 user-invocable: true
 ---
 
@@ -10,7 +10,7 @@ Define el propósito del cambio y crea diseño, requisitos, tareas y roadmap.
 
 ## Contexto
 
-Este comando lanza la fase **plan** del ciclo de vida de proyecto definido en `dev-core`. Integra Ingeniería del Propósito como primer paso. Para operaciones Git aplica las reglas de `git-core`.
+Este comando lanza la fase **plan** del ciclo de vida de proyecto definido en `telos-dev-core`. Integra Ingeniería del Propósito como primer paso. Para operaciones Git aplica las reglas de `telos-git-core`.
 
 ## Comportamiento
 

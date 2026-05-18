@@ -1,6 +1,6 @@
 ---
-name: check
-description: "Dev flow: validar + commit + PR — revisa contra propósito, ejecuta tests y cierra con commit semántico."
+name: telos-check
+description: "Activar SOLO si el usuario escribe `/telos:check` o pide explícitamente validar un cambio bajo Ingeniería del Propósito (revisa contra ficha de propósito, ejecuta tests/lint/build y cierra con commit semántico + PR). NO activar para validaciones puntuales, lint aislado, health checks, ni revisiones de PR sin ficha de propósito previa."
 user-invocable: true
 ---
 
@@ -10,7 +10,7 @@ Valida calidad contra propósito y estándares técnicos, y cierra con commit + 
 
 ## Contexto
 
-Este comando lanza la fase **check** del ciclo de vida de proyecto definido en `dev-core`. Combina revisión contra propósito, validación técnica y cierre Git. Para operaciones Git aplica las reglas de `git-core`.
+Este comando lanza la fase **check** del ciclo de vida de proyecto definido en `telos-dev-core`. Combina revisión contra propósito, validación técnica y cierre Git. Para operaciones Git aplica las reglas de `telos-git-core`.
 
 ## Comportamiento
 

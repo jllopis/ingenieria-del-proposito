@@ -1,6 +1,6 @@
 ---
-name: git-core
-description: "Flujo corporativo de Git: ramas, commits, PRs, merges y releases. Git Flow, Bitbucket, branch naming con Jira IDs, PR reviews y tagging SemVer."
+name: telos-git-core
+description: "Flujo corporativo de Git del plugin telos: ramas, commits, PRs, merges y releases. Git Flow, Bitbucket por defecto, branch naming con Jira IDs, PR reviews y tagging SemVer. Delegado desde telos-dev-core para todas las operaciones Git del ciclo de vida de proyecto."
 user-invocable: false
 ---
 
@@ -12,9 +12,9 @@ Aplicar el modelo corporativo de Git con reglas claras de ramas, PRs, revisiones
 
 ## Rol dentro del sistema de skills
 
-Esta skill es el **especialista de Git**. Opera como delegado desde `dev-core`, que es el orquestador del ciclo de vida del proyecto. Cuando `dev-core` necesita operaciones Git (crear ramas, commits, PRs, releases, sync), delega a esta skill.
+Esta skill es el **especialista de Git** del plugin telos. Opera como delegado desde `telos-dev-core`, que es el orquestador del ciclo de vida del proyecto. Cuando `telos-dev-core` necesita operaciones Git (crear ramas, commits, PRs, releases, sync), delega a esta skill.
 
-Si el usuario invoca directamente una operación Git sin pasar por `dev-core`, esta skill aplica igualmente sus reglas de forma autónoma.
+Si el usuario invoca directamente una operación Git sin pasar por `telos-dev-core`, esta skill aplica igualmente sus reglas de forma autónoma.
 
 ## Inputs
 
