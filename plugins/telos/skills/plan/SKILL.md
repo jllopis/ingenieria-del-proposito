@@ -25,12 +25,27 @@ Lee `docs/REQUIREMENTS.md` si existe. Si no hay sección "Modo del proyecto", pr
 
 Si el contexto lo sugiere claramente (p.ej. el usuario menciona "estoy solo", "es una política de seguridad", "tenemos varios devs"), propone uno con justificación y pide confirmación.
 
+### Paso 0.5 — Si hay docs preexistentes, pregunta su origen temporal
+
+Si encuentras docs en `docs/` (diseño funcional, especificaciones, propuestas, briefings), **NO asumas que reflejan el proyecto actual**. Antes de destilar nada, pregunta:
+
+> He detectado los siguientes docs preexistentes: [lista]. ¿Reflejan…
+> - (a) el **estado actual y objetivos vigentes** del proyecto?
+> - (b) una **visión futura o aspiracional** (p.ej. propuesta dependiente de aprobación, fase posterior, escenario hipotético)?
+> - (c) un **mix**: parte refleja el ahora, parte el futuro?
+>
+> Lo necesito para no contaminar el propósito con expectativas que no apliquen al alcance actual.
+
+Si la respuesta es (b) o (c), pide al usuario que delimite **qué partes son "ahora"** antes de continuar. Un doc llamado "Diseño funcional v0.1" puede describir el proyecto comprometido o solo el ideal aspiracional; sin esa distinción, la ficha-paraguas hereda restricciones que no se aplican.
+
 ### Paso 1 — Ficha de propósito-paraguas
 
 Invoca `/telos:brief` con alcance **paraguas**. La ficha describe el proyecto completo (4 horizontes globales). Los horizontes se aplican universalmente:
 
 - **dev-*:** funcional = capacidad técnica; arquitectónico = principios de diseño; restricción = lo que no debe ocurrir; autoría = legibilidad/mantenimiento del código.
 - **documental:** funcional = qué decisión/proceso habilita el cuerpo documental; arquitectónico = cómo encaja en el sistema documental existente; restricción = qué no puede contener; autoría = quién es responsable, cómo se aprueba y mantiene.
+
+`brief` validará la ficha-paraguas horizonte por horizonte con el usuario antes de devolverla cerrada (ver "Validación por horizonte" en `telos-brief`). **No avances al paso 2 hasta que los 4 horizontes estén explícitamente confirmados.** Una ficha-paraguas con horizontes sin validar contamina todas las fichas de capacidad que hereden de ella.
 
 ### Paso 2 — Descompón en fichas de capacidad
 

@@ -88,6 +88,24 @@ En modo proyecto, `/telos:plan` envuelve el brief al principio y `/telos:exec` g
 
 No es obligatorio usar todos. En cambios pequeños basta con `/telos:brief` y trabajar contra la ficha. En cambios ya hechos, se puede entrar directamente por `/telos:check`.
 
+### El flujo no es estrictamente lineal: las lecciones pueden refinar fichas en cualquier punto
+
+`/telos:check` formaliza el lazo "lección → refinar ficha" al cerrar un cambio, pero el lazo aplica también **durante `plan`**: el propio acto de formular un horizonte expone hipótesis ("creo que esto es PoC, no producción", "no estoy seguro de si esta restricción aplica al alcance actual") que el humano valida o corrige.
+
+Por eso `/telos:brief` valida horizonte por horizonte para alcances paraguas y capacidad (ver `telos-brief`): cada horizonte es ya una micro-lección que puede modificar el siguiente. Tratar la redacción de la ficha-paraguas como un solo paso de "redacta y aprueba en bloque" pierde estas lecciones tempranas.
+
+Regla: **el humano valida cada horizonte antes de avanzar al siguiente**. El agente no asume; pregunta. Lo que el agente destile de docs preexistentes es hipótesis, no propósito, hasta que el humano lo confirma.
+
+### Origen temporal de los docs preexistentes
+
+Cuando se arranca un proyecto sobre un repositorio que ya tiene documentación, **no asumas que esos docs reflejan el proyecto actual**. Un "Diseño funcional v0.1" puede describir:
+
+- el proyecto comprometido **ahora**,
+- una visión futura o aspiracional (PoC ahora, producción después; propuesta dependiente de aprobación; fase posterior),
+- o un mix de ambos.
+
+`/telos:plan` y `/telos:brief` deben preguntar el origen temporal antes de destilar la ficha. Sin esa distinción, los horizontes heredan restricciones que pueden no aplicar al alcance real, y el propósito se desalinea desde el primer momento.
+
 ## Comportamiento esperado del LLM
 
 - Si la petición del usuario es ambigua, formula primero una ficha de propósito antes de producir código.

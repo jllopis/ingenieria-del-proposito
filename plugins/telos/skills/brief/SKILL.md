@@ -22,6 +22,26 @@ Este comando forma parte del plugin `telos`. La ficha de propósito es el artefa
 4. Si algún horizonte queda ambiguo o incompleto, señálalo con una pregunta concreta al final.
 5. Devuelve la ficha completa.
 
+### Si destilas la ficha de docs preexistentes
+
+Si la ficha la estás extrayendo de documentos ya existentes (diseño funcional, especificaciones, propuestas), añade un paso previo:
+
+0. **Pregunta el origen temporal**: ¿estos docs reflejan el proyecto actual, una visión futura/aspiracional, o un mix? Sin esa distinción, los horizontes heredan restricciones que pueden no aplicar al alcance comprometido ahora. Un doc llamado "v0.1" o "propuesta" suele describir un ideal, no el alcance acordado.
+
+Solo después de aclarar el origen, destila los 4 horizontes.
+
+### Validación por horizonte (alcance paraguas o capacidad)
+
+Cuando el alcance detectado es **paraguas** o **capacidad** (ver "Detección de alcance"), **no presentes la ficha completa de una sola vez para validación en bloque**. Valida horizonte por horizonte:
+
+1. Presenta el horizonte **Funcional**. Pregunta: "¿lo confirmas, lo refinas o tienes algo que añadir/quitar?"
+2. Aplica la respuesta. Solo entonces presenta el horizonte **Arquitectónico** con la misma pregunta.
+3. Repite con **Restricción**.
+4. Repite con **Autoría**.
+5. Al final, muestra la ficha consolidada con los 4 horizontes ya validados y pregunta una última vez si el conjunto es coherente.
+
+El motivo: un horizonte de Funcional impreciso arrastra el resto. Es más rápido corregir uno a la vez que rehacer la ficha entera tras leerla. Para sub-decisión (ADR) o exploración, la validación bloque sigue siendo aceptable.
+
 ### Si el usuario no proporciona descripción
 
 Pregunta brevemente:
