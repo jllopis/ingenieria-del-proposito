@@ -109,4 +109,4 @@ Si el usuario prefiere no persistirla (cambio pequeño, exploración), respeta s
 
 ## Siguiente paso
 
-Una vez guardada la ficha, el usuario puede trabajar con ella como base para implementación. Cuando haya una propuesta o código, usar `/telos:review` para evaluarla contra los horizontes.
+Una vez guardada la ficha, el usuario puede trabajar con ella como base para implementación. Cuando haya una propuesta o código, usar `/telos:check` para evaluarla contra los horizontes y cerrar el cambio.

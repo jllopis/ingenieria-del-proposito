@@ -1,6 +1,6 @@
 ---
 name: telos-purpose-core
-description: Conocimiento base de Ingeniería del Propósito. Define los siete principios, los cuatro horizontes (funcional, arquitectónico, restricción, autoría), el flujo operativo y los anti-patrones. Gobierna el criterio de los comandos `/telos:brief`, `/telos:review` y `/telos:retro`.
+description: Conocimiento base de Ingeniería del Propósito. Define los siete principios, los cuatro horizontes (funcional, arquitectónico, restricción, autoría), el flujo operativo y los anti-patrones. Gobierna el criterio del comando `/telos:brief` y de la revisión por horizontes + lección de propósito embebidas en `/telos:check`.
 user-invocable: false
 ---
 
@@ -54,17 +54,19 @@ Todo cambio debe articular, al menos, estos cuatro horizontes:
 
 ### Encadenamiento de comandos
 
-Los tres comandos cubren los momentos clave del ciclo:
+El comando atómico es `/telos:brief`. La revisión por horizontes y la lección de propósito están embebidas en `/telos:check` (cierre de cambio). El flujo completo:
 
 ```
-/telos:brief  →  (trabajo / implementación)  →  /telos:review  →  /telos:retro
+/telos:brief  →  (implementación)  →  /telos:check (revisa + cierra + ofrece lección)
 ```
 
-- `/telos:brief`: al arrancar un cambio. Produce la ficha de propósito.
-- `/telos:review`: al revisar una propuesta, diff o PR. Evalúa contra la ficha.
-- `/telos:retro`: al cerrar un cambio. Captura aprendizaje reutilizable.
+En modo proyecto, `/telos:plan` envuelve el brief al principio y `/telos:exec` guía la implementación contra la ficha:
 
-No es obligatorio usar los tres siempre. En cambios pequeños basta con el brief. En cambios ya hechos, se puede entrar directamente por el review.
+```
+/telos:plan (incluye brief)  →  /telos:exec  →  /telos:check
+```
+
+No es obligatorio usar todos. En cambios pequeños basta con `/telos:brief` y trabajar contra la ficha. En cambios ya hechos, se puede entrar directamente por `/telos:check`.
 
 ## Comportamiento esperado del LLM
 

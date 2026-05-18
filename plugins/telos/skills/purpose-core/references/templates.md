@@ -14,6 +14,6 @@
 
 | Plantilla | Comando asociado |
 |-----------|-----------------|
-| Ficha de propósito | `/telos:brief` |
-| Revisión contra propósito | `/telos:review` |
-| Lección de propósito | `/telos:retro` |
+| Ficha de propósito | `/telos:brief` (también la usa `/telos:plan`) |
+| Revisión contra propósito | embebida en `/telos:check` |
+| Lección de propósito | embebida (opcional) en `/telos:check` |

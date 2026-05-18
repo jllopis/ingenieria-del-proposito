@@ -11,13 +11,14 @@ La integración se distribuye como el plugin **telos** para Claude Code, con ada
 La integración es **modular y por capas**:
 
 - tres **skills de conocimiento** para el contexto operativo persistente (metodología, ciclo de vida, Git),
-- nueve **slash commands** para los momentos concretos del flujo,
+- cuatro **slash commands** para los momentos concretos del flujo,
 - y **plantillas** reutilizables como salida estándar.
 
-Esto evita dos errores comunes:
+Esto evita tres errores comunes:
 
 - convertir una skill en un prompt gigante y rígido,
-- o depender solo de comandos sueltos sin una filosofía operativa consistente.
+- depender solo de comandos sueltos sin una filosofía operativa consistente,
+- inflar la superficie de comandos con envoltorios que duplican la metodología (versiones anteriores tenían 9 comandos con review/retro/init/resume/sync separados; ahora review y retro están embebidos en `check`, y init/resume/sync los aplica `telos-git-core` en lenguaje natural).
 
 ## Arquitectura del repositorio
 
@@ -28,29 +29,24 @@ ingenieria_proposito/                  # Raíz del repo (marketplace)
 ├── plugins/
 │   └── telos/                         # Plugin telos
 │       ├── .claude-plugin/
-│       │   └── plugin.json            # Manifiesto: name "telos", v1.0.0
-│       ├── skills/
-│   ├── purpose-core/            # Metodología de propósito (no invocable)
-│   │   ├── SKILL.md
-│   │   ├── assets/              # Plantillas de ficha, review y retro
-│   │   └── references/          # Modelo operativo, anti-patrones
-│   ├── dev-core/                # Ciclo de vida de proyecto (no invocable)
-│   │   └── SKILL.md
-│   ├── git-core/                # Flujo corporativo de Git (no invocable)
-│   │   ├── SKILL.md
-│   │   ├── references/          # Branching, commits, PRs, releases
-│   │   └── scripts/             # Validaciones automáticas
-│       ├── brief/                     # /telos:brief
-│       ├── review/                    # /telos:review
-│       ├── retro/                     # /telos:retro
-│       ├── init/                      # /telos:init
-│       ├── resume/                    # /telos:resume
-│       ├── plan/                      # /telos:plan
-│       ├── exec/                      # /telos:exec
-│       ├── check/                     # /telos:check
-│       └── sync/                      # /telos:sync
+│       │   └── plugin.json            # Manifiesto: name "telos", v2.0.0
+│       └── skills/
+│           ├── purpose-core/          # Metodología (no invocable, name: telos-purpose-core)
+│           │   ├── SKILL.md
+│           │   ├── assets/            # Plantillas de ficha, review y retro
+│           │   └── references/        # Modelo operativo, anti-patrones
+│           ├── dev-core/              # Ciclo de vida en 3 fases (no invocable, name: telos-dev-core)
+│           │   └── SKILL.md
+│           ├── git-core/              # Flujo Git + recetas init/resume/sync (no invocable, name: telos-git-core)
+│           │   ├── SKILL.md
+│           │   ├── references/        # Branching, commits, PRs, releases
+│           │   └── scripts/           # Validaciones automáticas
+│           ├── brief/                 # /telos:brief (name: telos-brief)
+│           ├── plan/                  # /telos:plan
+│           ├── exec/                  # /telos:exec
+│           └── check/                 # /telos:check (absorbe review + retro)
+├── .agents/skills/                    # Symlinks prefijados para Agent Skills
 ├── dist/                              # Adaptadores multiplataforma
-│   ├── codex/
 │   └── opencode/
 ├── docs/                              # Documentación del proyecto
 └── README.md
@@ -62,34 +58,24 @@ ingenieria_proposito/                  # Raíz del repo (marketplace)
 
 | Skill | Contenido |
 |-------|-----------|
-| `purpose-core` | Principios, horizontes, flujo, criterios de rechazo, anti-patrones |
-| `dev-core` | Fases del ciclo de vida (init → sync), reglas globales, integración con propósito |
-| `git-core` | Git Flow, branch naming con Jira, PRs, SemVer, seguridad |
+| `telos-purpose-core` | Principios, horizontes, flujo, criterios de rechazo, anti-patrones |
+| `telos-dev-core` | Tres fases del ciclo de vida (plan → exec → check), reglas globales, integración con propósito |
+| `telos-git-core` | Git Flow, branch naming con Jira, PRs, SemVer, seguridad + recetas de init/resume/sync |
 
 Estas skills se cargan automáticamente cuando un comando las referencia. No aparecen como comandos para el usuario.
 
 ### Slash commands
 
-#### Metodología de propósito
-
 | Comando | Cuándo usarlo |
 |---------|---------------|
-| `/telos:brief` | Al arrancar una tarea o convertir una petición difusa en ficha clara |
-| `/telos:review` | Al revisar una propuesta, diff o PR contra el propósito |
-| `/telos:retro` | Al cerrar un cambio y capturar aprendizaje reutilizable |
+| `/telos:brief` | Atómico: arrancar un cambio convirtiendo una petición difusa en ficha clara con los 4 horizontes |
+| `/telos:plan` | Modo proyecto: incluye brief + genera DESIGN/REQUIREMENTS/TASKS/ROADMAP |
+| `/telos:exec` | Implementar el plan o la ficha, con auto-revisión por horizontes |
+| `/telos:check` | Cerrar: revisión por horizontes + tests + commit + PR + lección opcional |
 
-#### Ciclo de vida de proyecto
+> **Nota:** El autocompletado del CLI muestra la forma corta (`/brief`, `/plan`, `/exec`, `/check`). Ambas formas son válidas.
 
-| Comando | Cuándo usarlo |
-|---------|---------------|
-| `/telos:init` | Al iniciar un proyecto desde cero |
-| `/telos:resume` | Al retomar un proyecto existente |
-| `/telos:plan` | Al planificar: diseño, requisitos, tareas, roadmap |
-| `/telos:exec` | Al implementar el plan aprobado |
-| `/telos:check` | Al validar + commit + PR |
-| `/telos:sync` | Al sincronizar cambios remotos |
-
-> **Nota:** El autocompletado del CLI muestra la forma corta (`/brief`, `/review`, etc.). Ambas formas son válidas.
+**Operaciones Git puras** (inicializar repo, retomar uno existente, sincronizar con remoto, branching, PRs, releases) no tienen comando propio: las aplica la skill `telos-git-core` cuando el usuario las pide en lenguaje natural ("inicializa el proyecto en Go", "retoma este repo", "sincroniza con develop").
 
 ### Plantillas
 
@@ -103,23 +89,21 @@ Son utilizables en tickets, PRs, notas de diseño y retrospectivas.
 
 ## Flujo recomendado de uso
 
-### Flujo de propósito (independiente)
+### Modo ligero (cambio puntual)
 
 ```
-/telos:brief  →  (implementación)  →  /telos:review  →  /telos:retro
+/telos:brief  →  (implementas)  →  /telos:check
 ```
 
-### Flujo de proyecto completo
+### Modo proyecto (feature de varios días)
 
 ```
-/telos:init o /telos:resume
-    → /telos:plan (incluye brief automáticamente)
-    → /telos:exec
-    → /telos:check (incluye review + commit + PR)
-    → /telos:sync
+/telos:plan (incluye brief)  →  /telos:exec  →  /telos:check
 ```
 
-No es obligatorio usar todos los comandos. En cambios pequeños basta con `/telos:brief`. En cambios ya hechos, se puede entrar directamente por `/telos:review`.
+`/telos:check` ofrece al final capturar una lección de propósito si el cambio dejó aprendizaje.
+
+No es obligatorio usar todos los comandos. En cambios pequeños basta con `/telos:brief` y trabajar contra la ficha. En cambios ya hechos, se puede entrar directamente por `/telos:check`. Las operaciones Git (init/resume/sync) se piden en lenguaje natural a `telos-git-core`.
 
 ## Distribución multiplataforma
 

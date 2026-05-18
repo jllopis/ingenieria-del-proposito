@@ -17,19 +17,18 @@ Este repositorio es un **marketplace** de Claude Code que distribuye el plugin *
 
 ### Comandos disponibles
 
+Cuatro comandos. Regla mental: `brief → exec → check`, y si el cambio es grande lo envuelves en `plan` al principio.
+
 | Comando | Descripción |
 |---------|-------------|
-| `/telos:brief` | Convierte una petición en una ficha de propósito |
-| `/telos:review` | Revisa una propuesta contra la ficha de propósito |
-| `/telos:retro` | Captura aprendizaje reutilizable tras cerrar un cambio |
-| `/telos:init` | Iniciar un proyecto nuevo |
-| `/telos:resume` | Retomar un proyecto existente |
-| `/telos:plan` | Planificar: diseño, requisitos, tareas, roadmap |
-| `/telos:exec` | Ejecutar el plan guiado por el propósito |
-| `/telos:check` | Validar contra propósito + tests + commit + PR |
-| `/telos:sync` | Sincronizar cambios remotos |
+| `/telos:brief` | Convierte una petición en una ficha de propósito (átomo de la metodología) |
+| `/telos:plan` | Modo proyecto: brief + diseño + requisitos + tareas + roadmap |
+| `/telos:exec` | Implementar guiado por la ficha, con auto-revisión por horizontes |
+| `/telos:check` | Revisión por horizontes + tests + commit + PR + lección opcional |
 
-> **Nota:** El autocompletado del CLI muestra la forma corta (`/brief`, `/review`, etc.). Ambas formas son válidas.
+Las operaciones Git puras (inicializar repo, retomar uno existente, sincronizar con remoto, branching, PRs, releases) las aplica la skill `telos-git-core` en lenguaje natural ("inicializa el proyecto", "sincroniza con develop"). No tienen comando propio.
+
+> **Nota:** El autocompletado del CLI muestra la forma corta (`/brief`, `/plan`, `/exec`, `/check`). Ambas formas son válidas.
 
 ### Instalación
 
@@ -61,19 +60,19 @@ Para actualizaciones automáticas: `/plugin` → pestaña **Marketplaces** → s
 
 ### Flujo típico
 
-```
-/telos:brief  →  (implementación)  →  /telos:review  →  /telos:retro
-```
-
-Con ciclo de proyecto completo:
+Modo ligero (cambio puntual):
 
 ```
-/telos:init o /telos:resume
-    → /telos:plan (incluye brief)
-    → /telos:exec
-    → /telos:check (incluye review + commit + PR)
-    → /telos:sync
+/telos:brief  →  (implementas)  →  /telos:check
 ```
+
+Modo proyecto (feature de varios días):
+
+```
+/telos:plan (incluye brief)  →  /telos:exec  →  /telos:check
+```
+
+`/telos:check` ofrece al final capturar una lección de propósito si el cambio dejó aprendizaje. Para operaciones Git (init repo, sync, branching) pide a `telos-git-core` en lenguaje natural.
 
 ## Documentación
 

@@ -77,6 +77,43 @@ Si el usuario invoca directamente una operación Git sin pasar por `telos-dev-co
 - Mezclar múltiples cambios no relacionados en un mismo commit.
 - Etiquetar releases sin SemVer.
 
+## Lifecycle operations
+
+Estas recetas las invocaba antes el ciclo de vida como comandos (`/telos:init`, `/telos:resume`, `/telos:sync`). Ahora se aplican cuando el usuario pide la operación equivalente en lenguaje natural ("inicializa el proyecto", "retoma este repo", "sincroniza con remoto") o desde `telos-dev-core`.
+
+### Recipe: init (inicializar proyecto)
+
+1. Confirma stack, nombre del proyecto y repo remoto.
+2. Inicializa el repo (si no existe) con estructura mínima.
+3. Crea ramas `main` y `develop` si se usa Git Flow.
+4. Instala dependencias y bootstrap mínimo.
+5. Ejecuta un smoke test o instrucción de arranque.
+6. Documenta cómo ejecutar localmente.
+
+Si falta info: pregunta por stack, nombre, repo remoto, branch principal y si se usa Git Flow.
+
+### Recipe: resume (retomar repo existente)
+
+1. Inspecciona ramas y remotos (`git branch -a`, `git remote -v`).
+2. Detecta cambios locales sin commit (`git status`).
+3. Identifica base branch correcta según tipo de trabajo (feature/bugfix → develop; hotfix → main).
+4. Localiza entrypoints relevantes y dependencias clave.
+5. Si la rama actual está desactualizada, propone aplicar la receta **sync**.
+
+Si falta info: pregunta por tipo de trabajo, ID de Jira, branch base y objetivo actual.
+
+### Recipe: sync (sincronizar con remoto)
+
+1. `git fetch`.
+2. Verifica estado local limpio.
+3. Aplica modo:
+   - **merge** (default) para ramas compartidas.
+   - **rebase** solo en ramas locales privadas.
+   - **ff-only** si no hay cambios locales.
+4. Resuelve conflictos y valida estado.
+
+Si falta info: pregunta por el modo deseado (merge/rebase/ff-only).
+
 ## Examples
 
 ### Example 1: Nueva feature

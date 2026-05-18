@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "telos",
-      "description": "Ingeniería del Propósito: brief, review, retro + ciclo de vida de proyecto + flujo corporativo de Git.",
+      "description": "Ingeniería del Propósito: cuatro comandos (brief, plan, exec, check) sobre tres skills de conocimiento + flujo corporativo de Git.",
       "source": "./plugins/telos"
     }
   ]

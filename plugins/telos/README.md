@@ -2,36 +2,28 @@
 
 Plugin para asistentes de código que aplica **Ingeniería del Propósito**: trabaja con LLMs desde propósito explícito en lugar de partir de contexto abundante.
 
-## Qué incluye
+## Comandos
 
-### Metodología de propósito
+Cuatro comandos. La regla mental: `brief → exec → check`, y si el cambio es grande, lo envuelves en `plan` al principio.
 
-| Comando | Descripción |
-|---------|-------------|
-| `/telos:brief` | Convierte una petición en una ficha de propósito con los 4 horizontes |
-| `/telos:review` | Revisa una propuesta contra la ficha de propósito |
-| `/telos:retro` | Captura aprendizaje reutilizable tras cerrar un cambio |
+| Comando | Cuándo usarlo |
+|---------|---------------|
+| `/telos:brief` | Atómico: convertir una petición en ficha de propósito con los 4 horizontes |
+| `/telos:plan` | Modo proyecto: incluye brief + genera `docs/DESIGN.md`, `REQUIREMENTS.md`, `TASKS.md`, `ROADMAP.md` |
+| `/telos:exec` | Implementar guiado por la ficha, con auto-revisión por horizontes |
+| `/telos:check` | Cierre: revisa por horizontes (antes era `/telos:review`) + tests + commit + PR + lección opcional (antes era `/telos:retro`) |
 
-### Ciclo de vida de proyecto
+Las operaciones Git puras (inicializar repo, retomar un repo existente, sincronizar con remoto, branching, PRs, releases) las cubre la skill `telos-git-core` cuando se las pides en lenguaje natural ("inicializa el proyecto", "retoma este repo", "sincroniza con develop"). No tienen comando propio.
 
-| Comando | Descripción |
-|---------|-------------|
-| `/telos:init` | Iniciar un proyecto nuevo |
-| `/telos:resume` | Retomar un proyecto existente |
-| `/telos:plan` | Planificar: diseño, requisitos, tareas, roadmap |
-| `/telos:exec` | Ejecutar el plan guiado por el propósito |
-| `/telos:check` | Validar contra propósito + tests + commit + PR |
-| `/telos:sync` | Sincronizar cambios remotos |
-
-### Skills de conocimiento (no invocables directamente)
+## Skills de conocimiento (no invocables directamente)
 
 Todas las skills están prefijadas con `telos-` para evitar colisión con skills built-in u otros plugins.
 
 | Skill | Descripción |
 |-------|-------------|
-| `telos-purpose-core` | Principios, horizontes, anti-patrones y flujo de la Ingeniería del Propósito |
-| `telos-dev-core` | Reglas del ciclo de vida por fases (init → sync) |
-| `telos-git-core` | Flujo corporativo de Git: Git Flow, branch naming, PRs, SemVer |
+| `telos-purpose-core` | Principios, horizontes, anti-patrones y flujo de la Ingeniería del Propósito. Plantillas en `assets/`. |
+| `telos-dev-core` | Reglas del ciclo de vida en 3 fases (plan → exec → check) |
+| `telos-git-core` | Flujo corporativo de Git: Git Flow, branch naming, PRs, SemVer + recetas de init/resume/sync |
 
 ## Los cuatro horizontes
 
@@ -44,19 +36,19 @@ Todo cambio debe articular:
 
 ## Flujo típico
 
-```
-/telos:brief  →  (implementación)  →  /telos:review  →  /telos:retro
-```
-
-Con ciclo de proyecto completo:
+Modo ligero (un cambio puntual):
 
 ```
-/telos:init o /telos:resume
-    → /telos:plan (incluye brief)
-    → /telos:exec
-    → /telos:check (incluye review + commit + PR)
-    → /telos:sync
+/telos:brief  →  (implementas)  →  /telos:check
 ```
+
+Modo proyecto (feature de varios días):
+
+```
+/telos:plan (incluye brief)  →  /telos:exec  →  /telos:check
+```
+
+`/telos:check` ofrece al final capturar una lección de propósito si el cambio dejó aprendizaje.
 
 ## Instalación en Claude Code
 
@@ -75,42 +67,29 @@ plugins/telos/
 ├── .claude-plugin/
 │   └── plugin.json
 ├── skills/
-│   ├── purpose-core/          # Conocimiento base de la metodología
+│   ├── purpose-core/            # Conocimiento base (no invocable)
 │   │   ├── SKILL.md
-│   │   ├── assets/            # Plantillas de ficha, review y retro
-│   │   └── references/        # Modelo operativo, anti-patrones
-│   ├── dev-core/              # Ciclo de vida de proyecto
+│   │   ├── assets/              # Plantillas de ficha, review y retro
+│   │   └── references/          # Modelo operativo, anti-patrones
+│   ├── dev-core/                # Ciclo de vida en 3 fases (no invocable)
 │   │   └── SKILL.md
-│   ├── git-core/              # Flujo corporativo de Git
+│   ├── git-core/                # Flujo Git + recetas init/resume/sync (no invocable)
 │   │   ├── SKILL.md
-│   │   ├── references/        # Branching, commits, PRs, releases
-│   │   └── scripts/           # Validaciones automáticas
-│   ├── brief/                 # /telos:brief
-│   │   └── SKILL.md
-│   ├── review/                # /telos:review
-│   │   └── SKILL.md
-│   ├── retro/                 # /telos:retro
-│   │   └── SKILL.md
-│   ├── init/                  # /telos:init
-│   │   └── SKILL.md
-│   ├── resume/                # /telos:resume
-│   │   └── SKILL.md
-│   ├── plan/                  # /telos:plan
-│   │   └── SKILL.md
-│   ├── exec/                  # /telos:exec
-│   │   └── SKILL.md
-│   ├── check/                 # /telos:check
-│   │   └── SKILL.md
-│   └── sync/                  # /telos:sync
-│       └── SKILL.md
+│   │   ├── references/          # Branching, commits, PRs, releases
+│   │   └── scripts/             # Validaciones automáticas
+│   ├── brief/                   # /telos:brief
+│   ├── plan/                    # /telos:plan
+│   ├── exec/                    # /telos:exec
+│   └── check/                   # /telos:check
 └── README.md
 ```
+
+> Los nombres de skill en el frontmatter están prefijados (`telos-brief`, `telos-plan`, etc.). Las carpetas conservan el nombre corto porque es lo que define el comando `/telos:<carpeta>`.
 
 ## Distribución multiplataforma
 
 Este plugin es el contenido canónico. Para otras plataformas, se generan adaptadores en `../../dist/`:
 
-- `dist/codex/` — adaptación para OpenAI Codex
 - `dist/opencode/` — adaptación para OpenCode
 
 ## Autor
