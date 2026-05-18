@@ -21,10 +21,18 @@ Cuatro comandos. Regla mental: `brief → exec → check`, y si el cambio es gra
 
 | Comando | Descripción |
 |---------|-------------|
-| `/telos:brief` | Convierte una petición en una ficha de propósito (átomo de la metodología) |
-| `/telos:plan` | Modo proyecto: brief + diseño + requisitos + tareas + roadmap |
-| `/telos:exec` | Implementar guiado por la ficha, con auto-revisión por horizontes |
-| `/telos:check` | Revisión por horizontes + tests + commit + PR + lección opcional |
+| `/telos:brief` | Convierte una petición en ficha de propósito. Detecta alcance (paraguas, capacidad, sub-decisión ADR o exploración) y propone dónde persistirla. |
+| `/telos:plan` | Modo proyecto: pregunta por modo, ficha-paraguas + fichas de capacidad + diseño + requisitos + tareas + roadmap. |
+| `/telos:exec` | Implementa o redacta guiado por la ficha. Recita los horizontes que cada tarea toca antes de empezar. |
+| `/telos:check` | Revisión por horizontes + validación + cierre (PR, commit con ficha embebida, o publicación documental) + lección con promoción a fichas + retro de fase si cierras fase. |
+
+### Modos de proyecto
+
+| Modo | Para qué |
+|------|----------|
+| `dev-team` | Equipo de desarrollo, Git Flow, PRs con reviewers humanos |
+| `dev-solo` | Un desarrollador + agente IA, sin PRs (ficha + revisión en mensaje de commit) |
+| `documental` | Entregables no-código: políticas, procedimientos, registros (almacén local, Drive, Confluence...) |
 
 Las operaciones Git puras (inicializar repo, retomar uno existente, sincronizar con remoto, branching, PRs, releases) las aplica la skill `telos-git-core` en lenguaje natural ("inicializa el proyecto", "sincroniza con develop"). No tienen comando propio.
 

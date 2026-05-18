@@ -8,12 +8,22 @@ Cuatro comandos. La regla mental: `brief → exec → check`, y si el cambio es 
 
 | Comando | Cuándo usarlo |
 |---------|---------------|
-| `/telos:brief` | Atómico: convertir una petición en ficha de propósito con los 4 horizontes |
-| `/telos:plan` | Modo proyecto: incluye brief + genera `docs/DESIGN.md`, `REQUIREMENTS.md`, `TASKS.md`, `ROADMAP.md` |
-| `/telos:exec` | Implementar guiado por la ficha, con auto-revisión por horizontes |
-| `/telos:check` | Cierre: revisa por horizontes (antes era `/telos:review`) + tests + commit + PR + lección opcional (antes era `/telos:retro`) |
+| `/telos:brief` | Atómico: convertir una petición en ficha de propósito con los 4 horizontes. Detecta alcance (paraguas / capacidad / sub-decisión ADR / exploración) y propone destino de persistencia. |
+| `/telos:plan` | Modo proyecto: pregunta por modo, genera ficha-paraguas + fichas de capacidad + `docs/DESIGN.md`, `REQUIREMENTS.md`, `TASKS.md`, `ROADMAP.md` adaptados al modo |
+| `/telos:exec` | Implementar guiado por la ficha. Recita explícitamente los horizontes que toca cada tarea antes de empezar, y auto-revisa al cerrar. |
+| `/telos:check` | Cierre: revisión por horizontes + validación (técnica o documental) + cierre adaptado al modo (PR / commit con ficha / publicación) + lección clasificada (local / capacidad / paraguas) con diff propuesto a las fichas. Detecta cierre de fase y lanza retro de fase. |
 
 Las operaciones Git puras (inicializar repo, retomar un repo existente, sincronizar con remoto, branching, PRs, releases) las cubre la skill `telos-git-core` cuando se las pides en lenguaje natural ("inicializa el proyecto", "retoma este repo", "sincroniza con develop"). No tienen comando propio.
+
+## Modos de proyecto
+
+| Modo | Para qué | Cierre |
+|------|----------|--------|
+| `dev-team` | Equipo de desarrollo con Git Flow y reviewers | commit + PR con ficha + revisión embebidas |
+| `dev-solo` | Un desarrollador + agente IA, sin reviewers humanos | commit semántico con ficha + revisión **en el mensaje** (sustituye al PR) |
+| `documental` | Entregables no-código: políticas, procedimientos, registros (almacén local, Drive, Confluence...) | publicación al almacén canónico + aprobaciones + notificación a stakeholders |
+
+El modo se declara al inicio del proyecto en `docs/REQUIREMENTS.md` y las skills lo leen para adaptar su comportamiento.
 
 ## Skills de conocimiento (no invocables directamente)
 

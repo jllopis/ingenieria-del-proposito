@@ -1,6 +1,6 @@
 ---
 name: telos-brief
-description: "Activar SOLO si el usuario escribe `/telos:brief` o pide explícitamente una ficha de propósito de Ingeniería del Propósito con los cuatro horizontes (funcional, arquitectónico, restricción, autoría). NO activar para resúmenes genéricos, briefings de reunión, descripciones de tareas, ni cualquier petición que no busque aplicar la metodología."
+description: "Activar SOLO si el usuario escribe `/telos:brief` o pide explícitamente una ficha de propósito de Ingeniería del Propósito con los cuatro horizontes (funcional, arquitectónico, restricción, autoría). Aplica a cambios de código, decisiones de arquitectura (ADRs) o entregables documentales (políticas, procedimientos, registros). Detecta alcance (paraguas / capacidad / sub-decisión / exploración) y propone destino de persistencia. NO activar para resúmenes genéricos, briefings de reunión, descripciones de tareas, ni cualquier petición que no busque aplicar la metodología."
 user-invocable: true
 ---
 
@@ -101,12 +101,29 @@ Salida esperada:
 - ¿Hay requisito de persistencia para notificaciones no entregadas?
 ```
 
+## Detección de alcance
+
+Antes de proponer destino, clasifica la ficha por **alcance**:
+
+| Alcance | Cuándo | Destino propuesto |
+|---------|--------|-------------------|
+| **Proyecto-paraguas** | Es la ficha que gobierna todo un proyecto nuevo | `docs/REQUIREMENTS.md` — sección "Ficha de propósito-paraguas" |
+| **Capacidad** | Es una capacidad relevante del proyecto (Intake, Parser, Notifier, una política de seguridad, etc.) | `docs/REQUIREMENTS.md` — sección "Fichas de capacidad", o `docs/requirements/<capacidad>.md` si el proyecto usa split |
+| **Sub-decisión (ADR)** | Decisión técnica o de diseño fina dentro de una capacidad: qué LLM, qué retry policy, qué shape de prompt, qué formato de plantilla, etc. | `docs/adr/NNNN-<slug>.md` siguiendo el patrón Architecture Decision Record |
+| **Tarea aislada / exploración** | Cambio pequeño que no merece sobrevivir a la conversación | conversación / PR description; no se persiste |
+
+Si dudas, pregúntalo: "¿Es esta ficha para el proyecto completo, una capacidad, una sub-decisión o un cambio puntual?"
+
 ## Persistencia
 
-Una vez validada la ficha, **sugiere al usuario guardarla en `docs/REQUIREMENTS.md`** dentro de la sección de fichas de propósito. La ficha actúa como user story + criterios de aceptación, y debe sobrevivir a la conversación para que `/telos:exec` y `/telos:check` puedan consultarla.
+Según alcance:
 
-Si el usuario prefiere no persistirla (cambio pequeño, exploración), respeta su decisión.
+- **Paraguas o capacidad** → `docs/REQUIREMENTS.md` (o `docs/requirements/<cap>.md` en split). La ficha actúa como user story + criterios de aceptación, y debe sobrevivir a la conversación para que `/telos:exec` y `/telos:check` puedan consultarla.
+- **Sub-decisión (ADR)** → `docs/adr/NNNN-<slug>.md` usando la plantilla `telos-purpose-core/assets/adr-template.md`. Numera correlativamente (lee el directorio existente; si no hay, empieza en `0001`). El ADR usa los 4 horizontes como sus secciones principales, no la estructura clásica de ADR.
+- **Exploración** → no persistir, respeta la decisión del usuario.
+
+Si el modo del proyecto es `documental` (ver `telos-dev-core`), las fichas de capacidad describen documentos o conjuntos documentales, no módulos de código. El destino es el mismo (`REQUIREMENTS.md` o split).
 
 ## Siguiente paso
 
-Una vez guardada la ficha, el usuario puede trabajar con ella como base para implementación. Cuando haya una propuesta o código, usar `/telos:check` para evaluarla contra los horizontes y cerrar el cambio.
+Una vez guardada la ficha, el usuario puede trabajar con ella como base. Cuando haya una propuesta, código o documento, usar `/telos:check` para evaluarla contra los horizontes y cerrar el cambio.

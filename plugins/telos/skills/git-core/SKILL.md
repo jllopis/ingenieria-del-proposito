@@ -16,6 +16,12 @@ Esta skill es el **especialista de Git** del plugin telos. Opera como delegado d
 
 Si el usuario invoca directamente una operación Git sin pasar por `telos-dev-core`, esta skill aplica igualmente sus reglas de forma autónoma.
 
+## Aplicabilidad por modo de proyecto
+
+- **`dev-team`**: aplica íntegra. Git Flow, ramas con ID de Jira, PRs con reviewers, releases con SemVer.
+- **`dev-solo`**: aplica el naming de ramas/commits/tags y las recetas init/resume/sync. **Se omite el flujo de PRs**: el cierre se hace por commit directamente sobre la rama de trabajo (o sobre `develop`/`main` si el solo dev así lo decide). El mensaje de commit lleva la ficha + revisión embebidas (ver `telos-check`).
+- **`documental`**: aplica solo si el almacén canónico del proyecto es git. Si el almacén es Drive/Confluence/SharePoint, esta skill es **opcional** y suele no usarse. Cuando aplica, el cierre suele ser commit + tag de versión de documento, sin PR.
+
 ## Inputs
 
 - Contexto del repo (cliente/proyecto, hosting actual si no es Bitbucket).

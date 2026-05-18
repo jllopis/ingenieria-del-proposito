@@ -31,16 +31,36 @@ Todo cambio debe articular, al menos, estos cuatro horizontes:
 - **Restricción**: qué no puede ocurrir bajo ninguna circunstancia.
 - **Autoría**: cómo debe leerse, mantenerse o evolucionar el resultado.
 
+Los cuatro horizontes son **universales**: aplican a código, a interacciones puntuales con un LLM, y a entregables no-código. Su traducción a un proyecto documental:
+
+- **Funcional**: qué decisión habilita el documento, qué proceso desbloquea, qué pregunta cierra.
+- **Arquitectónico**: cómo encaja en el cuerpo documental existente (jerarquía, referencias cruzadas, normativa aplicable, sistema documental corporativo).
+- **Restricción**: qué no puede contener (datos confidenciales, contradicciones con normativa, ambigüedad en responsables, etc.).
+- **Autoría**: quién es responsable, cómo se aprueba, cómo se versiona, cómo se mantiene en el tiempo.
+
+## Modos de proyecto
+
+La metodología funciona en tres modos. El modo se declara al inicio del proyecto en `REQUIREMENTS.md` y las skills lo leen para adaptar su comportamiento:
+
+| Modo | Cuándo | Cierre típico |
+|------|--------|---------------|
+| `dev-team` | Proyecto de desarrollo con equipo (>1 dev) | commit + PR + reviewers humanos |
+| `dev-solo` | Un desarrollador + agente IA, sin reviewer humano | commit (la ficha + revisión van en el mensaje); sin PR |
+| `documental` | Producción/revisión de políticas, procedimientos, registros u otros entregables no-código | versión publicada y comunicada a stakeholders; validación documental (plantilla, referencias, aprobaciones) en vez de tests |
+
+En `dev-solo`, la disciplina del propósito sustituye al reviewer humano: el agente revisa contra la ficha antes del commit y la traza queda en el mensaje. En `documental`, el "deliverable" son documentos (en Drive, Confluence, local, etc.); las skills de Git pasan a opcionales.
+
 ## Cuándo activar esta skill
 
 Úsala cuando el usuario pida cualquiera de estas cosas o algo equivalente:
 
-- definir mejor una tarea antes de delegarla a un LLM,
+- definir mejor una tarea (de código o documental) antes de delegarla a un LLM,
 - convertir una petición vaga en una ficha clara,
-- revisar si una propuesta o PR cumple un propósito,
+- revisar si una propuesta, PR o documento cumple un propósito,
 - reducir prompts basados en contexto excesivo,
-- traducir una necesidad técnica a los cuatro horizontes,
-- capturar una lección aprendida tras un cambio.
+- traducir una necesidad técnica o documental a los cuatro horizontes,
+- capturar una lección aprendida tras un cambio,
+- arrancar un proyecto (de código, documental, mixto) declarando su modo y propósito-paraguas.
 
 ## Flujo de trabajo
 
