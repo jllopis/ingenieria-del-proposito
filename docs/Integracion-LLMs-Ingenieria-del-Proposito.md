@@ -6,13 +6,16 @@ Este documento traduce la `Ingeniería del Propósito` a artefactos directamente
 
 La integración se distribuye como el plugin **telos** para Claude Code, con adaptadores para OpenAI Codex y OpenCode.
 
+**Estado actual:** v2.3.0 (mayo 2026).
+
 ## Decisión de diseño
 
 La integración es **modular y por capas**:
 
 - tres **skills de conocimiento** para el contexto operativo persistente (metodología, ciclo de vida, Git),
 - cuatro **slash commands** para los momentos concretos del flujo,
-- y **plantillas** reutilizables como salida estándar.
+- **plantillas** reutilizables como salida estándar,
+- tres **modos de proyecto** que adaptan el cierre y la validación al contexto: `dev-team` (equipo + PRs), `dev-solo` (un dev + agente IA, sin PRs), `documental` (entregables no-código).
 
 Esto evita tres errores comunes:
 
@@ -29,7 +32,7 @@ ingenieria_proposito/                  # Raíz del repo (marketplace)
 ├── plugins/
 │   └── telos/                         # Plugin telos
 │       ├── .claude-plugin/
-│       │   └── plugin.json            # Manifiesto: name "telos", v2.0.0
+│       │   └── plugin.json            # Manifiesto: name "telos", v2.3.0
 │       └── skills/
 │           ├── purpose-core/          # Metodología (no invocable, name: telos-purpose-core)
 │           │   ├── SKILL.md
@@ -77,6 +80,26 @@ Estas skills se cargan automáticamente cuando un comando las referencia. No apa
 
 **Operaciones Git puras** (inicializar repo, retomar uno existente, sincronizar con remoto, branching, PRs, releases) no tienen comando propio: las aplica la skill `telos-git-core` cuando el usuario las pide en lenguaje natural ("inicializa el proyecto en Go", "retoma este repo", "sincroniza con develop").
 
+### Modos de proyecto
+
+El modo se declara al inicio del proyecto en `docs/REQUIREMENTS.md` como cabecera obligatoria, junto con el almacén canónico y la política de push automático:
+
+```md
+**Modo del proyecto:** dev-team | dev-solo | documental
+**Almacén canónico:** [git remote URL | Drive folder | Confluence space]
+**Push automático:** yes | no
+```
+
+Cada skill lee el modo y adapta su comportamiento. El cierre de `/telos:check` es el caso más visible:
+
+| Modo | `/telos:check` cierra con… | Validación |
+|------|----------------------------|------------|
+| `dev-team` | commit + push + PR con ficha embebida (plantilla `pr-template.md`) | tests / lint / build (fail-hard) |
+| `dev-solo` | commit + push con ficha y revisión en el mensaje del commit (plantilla `commit-message-template.md`) | tests / lint / build (fail-hard) |
+| `documental` | publicación al almacén canónico + registro de versión + notificación a stakeholders | plantilla aplicada + referencias íntegras + aprobaciones presentes |
+
+En `dev-solo`, la disciplina del propósito sustituye al reviewer humano: el agente revisa contra la ficha antes del commit y la traza queda en el mensaje. En `documental`, el "deliverable" son documentos (en Drive, Confluence, local, etc.); las skills de Git pasan a opcionales.
+
 ### Plantillas
 
 Las plantillas existen como activos copiables en `purpose-core/assets/`:
@@ -84,26 +107,47 @@ Las plantillas existen como activos copiables en `purpose-core/assets/`:
 - `purpose-brief-template.md` — ficha de propósito
 - `purpose-review-template.md` — revisión contra propósito
 - `purpose-retro-template.md` — lección de propósito
+- `pr-template.md` — cuerpo de PR en modo `dev-team` (ficha + revisión + cambios + validación)
+- `commit-message-template.md` — cuerpo del commit en modo `dev-solo` (ficha + revisión embebidas)
+- `adr-template.md` — Architecture Decision Record para fichas de sub-decisión técnica (alcance detectado automáticamente por `/telos:brief`)
 
-Son utilizables en tickets, PRs, notas de diseño y retrospectivas.
+Son utilizables en tickets, PRs, notas de diseño, retrospectivas y catálogos de ADRs.
 
 ## Flujo recomendado de uso
 
-### Modo ligero (cambio puntual)
+> Los **modos de proyecto** (dev-team / dev-solo / documental) y los **ritos de uso** descritos aquí son ortogonales. Un mismo proyecto en modo `dev-solo` puede usar el rito ligero para un bugfix puntual y el rito proyecto para una feature de varios días.
+
+### Rito ligero (cambio puntual)
 
 ```
 /telos:brief  →  (implementas)  →  /telos:check
 ```
 
-### Modo proyecto (feature de varios días)
+### Rito proyecto (feature de varios días)
 
 ```
 /telos:plan (incluye brief)  →  /telos:exec  →  /telos:check
 ```
 
-`/telos:check` ofrece al final capturar una lección de propósito si el cambio dejó aprendizaje.
+`/telos:check` ofrece al final capturar una lección de propósito si el cambio dejó aprendizaje. Si la lección refina una ficha (capacidad o paraguas), produce un diff sobre `REQUIREMENTS.md` que pide aprobación antes de aplicarse. Si la tarea cerrada es la última de una fase del ROADMAP, dispara una **retro de fase** más profunda con diffs sobre el paraguas y la fase siguiente.
 
 No es obligatorio usar todos los comandos. En cambios pequeños basta con `/telos:brief` y trabajar contra la ficha. En cambios ya hechos, se puede entrar directamente por `/telos:check`. Las operaciones Git (init/resume/sync) se piden en lenguaje natural a `telos-git-core`.
+
+## Refuerzos sobre la metodología base
+
+El plugin no es estático. Cada iteración añade refuerzos derivados de uso real. Los actuales (v2.3.0):
+
+| Refuerzo | Qué hace | Skill afectada |
+|---|---|---|
+| **R1** — Promoción de lecciones | `/telos:check` clasifica obligatoriamente cada lección (local / capacidad / paraguas) y produce diff sobre `REQUIREMENTS.md` cuando corresponde | check |
+| **R2** — Plantilla PR | El cuerpo del PR en `dev-team` lleva ficha + revisión por horizontes embebidas, visibles a reviewers humanos | check + asset `pr-template.md` |
+| **R3** — ADRs sub-decisión | `/telos:brief` detecta alcance (paraguas / capacidad / sub-decisión / exploración) y propone `docs/adr/NNNN-*.md` para sub-decisiones técnicas | brief + asset `adr-template.md` |
+| **R4** — Retro de fase | `/telos:check` detecta cierre de fase del ROADMAP y dispara retro más profunda con diffs sobre paraguas y siguiente fase | check |
+| **R5** — Recitar horizontes | `/telos:exec` lista explícitamente qué horizontes toca cada tarea antes de empezar; sustituye la auto-revisión vaga | exec |
+| **R6** — Validación horizonte por horizonte | `/telos:brief` valida horizonte por horizonte en alcances paraguas y capacidad, no en bloque | brief |
+| **R7** — Origen temporal de docs | `/telos:plan` paso 0.5: cuando hay docs preexistentes, pregunta si reflejan el ahora, una visión futura o un mix, antes de destilar | plan |
+| **R8** — Flujo no lineal | Las lecciones pueden refinar fichas durante `plan`, no solo durante `check`. Cada horizonte formulado es una micro-lección | purpose-core |
+| **R9** — Push automático | `/telos:check` integra `git push` al cierre en modos `dev-*` con remote configurado. Override con `**Push automático:** no` en `REQUIREMENTS.md` | check |
 
 ## Distribución multiplataforma
 
