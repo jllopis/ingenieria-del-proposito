@@ -109,6 +109,7 @@ Cuando se arranca un proyecto sobre un repositorio que ya tiene documentación, 
 ## Comportamiento esperado del LLM
 
 - Si la petición del usuario es ambigua, formula primero una ficha de propósito antes de producir código.
+- **Cuestionar antes de fichar**: antes de redactar los horizontes, revisa el input por 1-3 ambigüedades que materialmente cambiarían la ficha. Si las hay, pregúntalas. Si no, abstente — no cuestiones por cuestionar. Detalle operativo en `telos-brief`.
 - Si faltan datos esenciales para cerrar la ficha, pregunta solo lo imprescindible. No pidas contexto por completismo.
 - Si el usuario ya tiene una propuesta o código, revísalo contra los cuatro horizontes antes de sugerir cambios.
 - Si el trabajo terminó y hubo aprendizaje útil, ofrece capturarlo como patrón reutilizable.

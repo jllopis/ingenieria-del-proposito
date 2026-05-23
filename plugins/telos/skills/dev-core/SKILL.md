@@ -3,7 +3,7 @@ name: telos-dev-core
 description: "Ciclo de vida de proyecto del plugin telos en 3 fases (plan → exec → check), adaptable a tres modos: dev-team (equipo + PRs), dev-solo (un dev + agente IA, sin PRs), documental (entregables no-código). Integra telos-purpose-core en las tres fases y delega Git a telos-git-core cuando aplica. Orquestador de `/telos:plan`, `/telos:exec`, `/telos:check`."
 user-invocable: false
 metadata:
-  version: "2.3.0"
+  version: "2.4.0"
 ---
 
 # Dev Flow

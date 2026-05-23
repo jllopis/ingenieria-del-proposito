@@ -1,6 +1,6 @@
 ---
 name: telos-brief
-description: "Activar SOLO si el usuario escribe `/telos:brief` o pide explícitamente una ficha de propósito de Ingeniería del Propósito con los cuatro horizontes (funcional, arquitectónico, restricción, autoría). Aplica a cambios de código, decisiones de arquitectura (ADRs) o entregables documentales (políticas, procedimientos, registros). Detecta alcance (paraguas / capacidad / sub-decisión / exploración) y propone destino de persistencia. NO activar para resúmenes genéricos, briefings de reunión, descripciones de tareas, ni cualquier petición que no busque aplicar la metodología."
+description: "Activar SOLO si el usuario escribe `/telos:brief` o pide explícitamente una ficha de propósito de Ingeniería del Propósito con los cuatro horizontes (funcional, arquitectónico, restricción, autoría). Aplica a cambios de código, decisiones de arquitectura (ADRs) o entregables documentales (políticas, procedimientos, registros). Antes de redactar, **cuestiona el input** si hay 1-3 ambigüedades que materialmente cambiarían la ficha (no cuestiona por cuestionar). Detecta alcance (paraguas / capacidad / sub-decisión / exploración) y propone destino de persistencia. NO activar para resúmenes genéricos, briefings de reunión, descripciones de tareas, ni cualquier petición que no busque aplicar la metodología."
 user-invocable: true
 ---
 
@@ -14,13 +14,45 @@ Este comando forma parte del plugin `telos`. La ficha de propósito es el artefa
 
 ## Comportamiento
 
+### Cuestionar antes de fichar (R10)
+
+Antes de redactar los horizontes, revisa el input del usuario para identificar **1-3 cuestiones que materialmente cambiarían la ficha resultante** si se respondiesen primero. Si las encuentras, pregúntalas y espera respuesta antes de redactar. Si no, abstente y procede directamente. **No cuestiones por cuestionar**: la abstención también es disciplina.
+
+**Criterios para cuestionar:**
+
+- Ambigüedad estructural que afectaría más de un horizonte (no la de un detalle aislado).
+- Supuestos ocultos que conviene explicitar antes de fijarlos en Restricción o Autoría.
+- Restricciones probables que el usuario no mencionó pero serían críticas (seguridad, retención, cumplimiento, coste, latencia).
+- Alcance que conflua varios cambios distintos en una sola ficha (separar antes de fichar).
+- Términos clave subespecificados ("rápido", "seguro", "configurable", "robusto", "mínimo") que necesitan métrica o criterio operacional para que un horizonte se pueda evaluar.
+- Pista de modo de proyecto incongruente con el contexto (p. ej. el usuario menciona equipo + reviewers pero el repo es `dev-solo`).
+
+**Criterios para abstenerse:**
+
+- El input ya es suficientemente claro y las preguntas serían cosméticas.
+- Los detalles preguntados pertenecen a `exec` (cómo implementar), no a propósito (qué/por qué/restricciones).
+- La duda razonable cabe como `[pendiente de aclarar]` al final de la ficha sin bloquear el primer borrador.
+- Necesitarías más de 3 preguntas: significa que el input es demasiado ambiguo y conviene pedir al usuario que reformule el alcance, no atomizar.
+
+**Formato sugerido cuando cuestionas:**
+
+```md
+Antes de fichar, déjame asegurar el alcance:
+- [pregunta concreta 1]
+- [pregunta concreta 2]
+Cuando confirmes, redacto los 4 horizontes.
+```
+
+Regla operativa: **cuestionar mejora la ficha o no se hace**. Preguntar por preguntar añade fricción sin valor.
+
 ### Si el usuario proporciona una descripción del cambio
 
-1. Resume el cambio en una frase clara.
-2. Redacta los cuatro horizontes (funcional, arquitectónico, restricción, autoría) a partir de lo que el usuario ha descrito.
-3. Identifica el contexto mínimo necesario para ejecutar.
-4. Si algún horizonte queda ambiguo o incompleto, señálalo con una pregunta concreta al final.
-5. Devuelve la ficha completa.
+1. Aplica "Cuestionar antes de fichar". Si surgen preguntas materiales, plantéalas y espera. Si no, procede.
+2. Resume el cambio en una frase clara.
+3. Redacta los cuatro horizontes (funcional, arquitectónico, restricción, autoría) a partir de lo que el usuario ha descrito.
+4. Identifica el contexto mínimo necesario para ejecutar.
+5. Si algún horizonte queda ambiguo o incompleto pero no merecía cuestionar antes, señálalo con `[pendiente]` al final.
+6. Devuelve la ficha completa.
 
 ### Si destilas la ficha de docs preexistentes
 
@@ -52,7 +84,7 @@ No pidas más de lo necesario para arrancar.
 
 ### Si el usuario proporciona algo parcial
 
-Completa lo que puedas inferir razonablemente y marca con `[pendiente]` lo que necesite confirmación del usuario.
+Aplica "Cuestionar antes de fichar": si lo que falta materialmente cambia la ficha, pregúntalo. Si solo son detalles menores, completa lo que puedas inferir razonablemente y marca con `[pendiente]` lo que necesite confirmación del usuario.
 
 ## Formato de salida
 

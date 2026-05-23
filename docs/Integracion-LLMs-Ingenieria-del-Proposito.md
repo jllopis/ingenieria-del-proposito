@@ -6,7 +6,7 @@ Este documento traduce la `Ingeniería del Propósito` a artefactos directamente
 
 La integración se distribuye como el plugin **telos** para Claude Code, con adaptadores para OpenAI Codex y OpenCode.
 
-**Estado actual:** v2.3.0 (mayo 2026).
+**Estado actual:** v2.4.0 (mayo 2026).
 
 ## Decisión de diseño
 
@@ -32,7 +32,7 @@ ingenieria_proposito/                  # Raíz del repo (marketplace)
 ├── plugins/
 │   └── telos/                         # Plugin telos
 │       ├── .claude-plugin/
-│       │   └── plugin.json            # Manifiesto: name "telos", v2.3.0
+│       │   └── plugin.json            # Manifiesto: name "telos", v2.4.0
 │       └── skills/
 │           ├── purpose-core/          # Metodología (no invocable, name: telos-purpose-core)
 │           │   ├── SKILL.md
@@ -135,7 +135,7 @@ No es obligatorio usar todos los comandos. En cambios pequeños basta con `/telo
 
 ## Refuerzos sobre la metodología base
 
-El plugin no es estático. Cada iteración añade refuerzos derivados de uso real. Los actuales (v2.3.0):
+El plugin no es estático. Cada iteración añade refuerzos derivados de uso real. Los actuales (v2.4.0):
 
 | Refuerzo | Qué hace | Skill afectada |
 |---|---|---|
@@ -148,6 +148,7 @@ El plugin no es estático. Cada iteración añade refuerzos derivados de uso rea
 | **R7** — Origen temporal de docs | `/telos:plan` paso 0.5: cuando hay docs preexistentes, pregunta si reflejan el ahora, una visión futura o un mix, antes de destilar | plan |
 | **R8** — Flujo no lineal | Las lecciones pueden refinar fichas durante `plan`, no solo durante `check`. Cada horizonte formulado es una micro-lección | purpose-core |
 | **R9** — Push automático | `/telos:check` integra `git push` al cierre en modos `dev-*` con remote configurado. Override con `**Push automático:** no` en `REQUIREMENTS.md` | check |
+| **R10** — Cuestionar antes de fichar | `/telos:brief` revisa el input por 1-3 ambigüedades que materialmente cambiarían la ficha y pregunta antes de redactar; abstenerse si el input ya es claro. No cuestionar por cuestionar | brief + purpose-core |
 
 ## Distribución multiplataforma
 

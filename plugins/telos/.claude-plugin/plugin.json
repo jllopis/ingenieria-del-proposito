@@ -1,7 +1,7 @@
 {
   "name": "telos",
   "description": "Ingeniería del Propósito: trabaja con LLMs desde propósito explícito. Cuatro comandos (brief, plan, exec, check) sobre tres skills de conocimiento (telos-purpose-core, telos-dev-core, telos-git-core). Tres modos de proyecto: dev-team, dev-solo, documental.",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "author": {
     "name": "Joan Llopis"
   },
